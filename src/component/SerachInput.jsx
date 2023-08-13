@@ -1,14 +1,4 @@
-const SerachInput = ({ query, setQuery }) => {
-  return (
-    <div>
-      <input
-        className="search"
-        type="text"
-        placeholder="Search movies..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-    </div>
-  );
+const SerachInput = ({ children }) => {
+  return <div>{children}</div>;
 };
 export default SerachInput;
