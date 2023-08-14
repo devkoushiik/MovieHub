@@ -25,7 +25,7 @@ const Main = ({
         {!isError && !isLoading && (
           <MovieListBoxLeft movies={movies} setMovies={setMovies} />
         )}
-        {isError && <Error />}
+        {isError && <Error isError={isError} />}
         <MovieWatchListBoxRight
           tempWatchedData={tempWatchedData}
           average={average}
@@ -43,10 +43,10 @@ function Loader() {
   );
 }
 
-function Error() {
+function Error({ isError }) {
   return (
     <div>
-      <p className="error">Something went wrong!!!❌</p>
+      <p className="error">{isError}</p>
     </div>
   );
 }

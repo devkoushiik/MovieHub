@@ -52,27 +52,31 @@ const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 const API_KEY = "43687838";
+const QUERY_STRING = "interstellar";
 // const URL = `http://www.omdbapi.com/?i=tt3896198&apikey=43687838&`;
-const URL = `http://www.omdbapi.com/?apikey=${API_KEY}&s=interstellar`;
+const URL = `http://www.omdbapi.com/?apikey=${API_KEY}&s=${QUERY_STRING}`;
 
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [isError, setIsError] = useState("");
 
   useEffect(() => {
     const fetchingData = async () => {
       try {
         setIsLoading(true);
         const res = await fetch(URL);
+        // checking for response
         if (!res.ok) {
-          setIsError(true);
-          throw new Error("Something went wrong!");
+          throw new Error("Something went wrong!!!❌");
         }
         const data = await res.json();
+        // checking for unknown query
+        if (data.Response === "False") throw new Error("Movie not found!!!❌");
         setMovies(data.Search);
       } catch (error) {
-        console.log(error.message);
+        console.error(error.message);
+        setIsError(error.message);
       } finally {
         setIsLoading(false);
       }
