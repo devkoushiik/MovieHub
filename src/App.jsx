@@ -65,15 +65,16 @@ export default function App() {
       try {
         setIsLoading(true);
         const res = await fetch(URL);
-        const data = await res.json();
-        setMovies(data.Search);
-        setIsLoading(false);
         if (!res.ok) {
           setIsError(true);
           throw new Error("Something went wrong!");
         }
+        const data = await res.json();
+        setMovies(data.Search);
       } catch (error) {
         console.log(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchingData();

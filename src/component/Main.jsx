@@ -14,13 +14,18 @@ const Main = ({
   return (
     <div>
       <main className="main">
-        {isError ? (
+        {/* {isError ? (
           <Error />
         ) : isLoading ? (
           <Loader />
         ) : (
           <MovieListBoxLeft movies={movies} setMovies={setMovies} />
+        )} */}
+        {isLoading && <Loader />}
+        {!isError && !isLoading && (
+          <MovieListBoxLeft movies={movies} setMovies={setMovies} />
         )}
+        {isError && <Error />}
         <MovieWatchListBoxRight
           tempWatchedData={tempWatchedData}
           average={average}
