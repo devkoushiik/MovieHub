@@ -8,11 +8,19 @@ const Main = ({
   average,
   movies,
   setMovies,
+  isLoading,
+  isError,
 }) => {
   return (
     <div>
       <main className="main">
-        <MovieListBoxLeft movies={movies} setMovies={setMovies} />
+        {isError ? (
+          <Error />
+        ) : isLoading ? (
+          <Loader />
+        ) : (
+          <MovieListBoxLeft movies={movies} setMovies={setMovies} />
+        )}
         <MovieWatchListBoxRight
           tempWatchedData={tempWatchedData}
           average={average}
@@ -21,4 +29,20 @@ const Main = ({
     </div>
   );
 };
+
+function Loader() {
+  return (
+    <div>
+      <p className="loader">Loading...</p>
+    </div>
+  );
+}
+
+function Error() {
+  return (
+    <div>
+      <p className="error">Something went wrong!!!❌</p>
+    </div>
+  );
+}
 export default Main;

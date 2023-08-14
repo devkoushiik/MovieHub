@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./component/Navbar";
 import Main from "./component/Main";
 const tempMovieData = [
@@ -51,8 +51,34 @@ const tempWatchedData = [
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
+const API_KEY = "43687838";
+// const URL = `http://www.omdbapi.com/?i=tt3896198&apikey=43687838&`;
+const URL = `http://www.omdbapi.com/?apikey=${API_KEY}&s=interstellar`;
+
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    const fetchingData = async () => {
+      try {
+        setIsLoading(true);
+        const res = await fetch(URL);
+        const data = await res.json();
+        setMovies(data.Search);
+        setIsLoading(false);
+        if (!res.ok) {
+          setIsError(true);
+          throw new Error("Something went wrong!");
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchingData();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -62,6 +88,8 @@ export default function App() {
         average={average}
         movies={movies}
         setMovies={setMovies}
+        isLoading={isLoading}
+        isError={isError}
       />
     </>
   );
