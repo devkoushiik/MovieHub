@@ -52,20 +52,22 @@ const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 const API_KEY = "43687838";
-const QUERY_STRING = "interstellar";
-// const URL = `http://www.omdbapi.com/?i=tt3896198&apikey=43687838&`;
-const URL = `http://www.omdbapi.com/?apikey=${API_KEY}&s=${QUERY_STRING}`;
 
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
+  const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState("");
+  const [isError, setIsError] = useState(false);
+  const TEMP_QUERY_STRING = query;
 
   useEffect(() => {
     const fetchingData = async () => {
       try {
         setIsLoading(true);
-        const res = await fetch(URL);
+        setIsError(false);
+        const res = await fetch(
+          `http://www.omdbapi.com/?apikey=${API_KEY}&s=${TEMP_QUERY_STRING}`
+        );
         // checking for response
         if (!res.ok) {
           throw new Error("Something went wrong!!!❌");
@@ -81,12 +83,17 @@ export default function App() {
         setIsLoading(false);
       }
     };
+    if (query.length < 3) {
+      setMovies([]);
+      setIsError("");
+      return;
+    }
     fetchingData();
-  }, []);
+  }, [TEMP_QUERY_STRING]);
 
   return (
     <>
-      <Navbar />
+      <Navbar query={query} setQuery={setQuery} />
       <Main
         tempMovieData={tempMovieData}
         tempWatchedData={tempWatchedData}

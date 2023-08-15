@@ -2,8 +2,7 @@ import { useState } from "react";
 import SerachInput from "./SerachInput";
 import Navlogo from "./Navlogo";
 import NavSearchResult from "./NavSearchResult";
-const Navbar = () => {
-  const [query, setQuery] = useState("");
+const Navbar = ({ query, setQuery }) => {
   return (
     <div>
       <nav className="nav-bar">
