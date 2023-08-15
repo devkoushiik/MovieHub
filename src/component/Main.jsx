@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MovieListBoxLeft from "./MovieListBoxLeft";
 import MovieWatchListBoxRight from "./MovieWatchListBoxRight";
+import MovieDetails from "./MovieDetails";
 
 const Main = ({
   tempMovieData,
@@ -10,32 +11,47 @@ const Main = ({
   setMovies,
   isLoading,
   isError,
+  selectedId,
+  onSelectMovie,
+  onCloseMovie,
+  apiKey,
+  watched,
+  onHandleWatched,
 }) => {
   return (
     <div>
       <main className="main">
-        {/* {isError ? (
-          <Error />
-        ) : isLoading ? (
-          <Loader />
-        ) : (
-          <MovieListBoxLeft movies={movies} setMovies={setMovies} />
-        )} */}
         {isLoading && <Loader />}
         {!isError && !isLoading && (
-          <MovieListBoxLeft movies={movies} setMovies={setMovies} />
+          <MovieListBoxLeft
+            movies={movies}
+            setMovies={setMovies}
+            onSelectMovie={onSelectMovie}
+          />
         )}
         {isError && <Error isError={isError} />}
-        <MovieWatchListBoxRight
-          tempWatchedData={tempWatchedData}
-          average={average}
-        />
+        {selectedId ? (
+          <MovieDetails
+            selectedId={selectedId}
+            apiKey={apiKey}
+            onCloseMovie={onCloseMovie}
+            onHandleWatched={onHandleWatched}
+            watched={watched}
+          />
+        ) : (
+          <MovieWatchListBoxRight
+            tempWatchedData={tempWatchedData}
+            average={average}
+            onCloseMovie={onCloseMovie}
+            watched={watched}
+          />
+        )}
       </main>
     </div>
   );
 };
 
-function Loader() {
+export function Loader() {
   return (
     <div>
       <p className="loader">Loading...</p>
@@ -43,7 +59,7 @@ function Loader() {
   );
 }
 
-function Error({ isError }) {
+export function Error({ isError }) {
   return (
     <div>
       <p className="error">{isError}</p>

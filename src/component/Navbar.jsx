@@ -2,7 +2,7 @@ import { useState } from "react";
 import SerachInput from "./SerachInput";
 import Navlogo from "./Navlogo";
 import NavSearchResult from "./NavSearchResult";
-const Navbar = ({ query, setQuery }) => {
+const Navbar = ({ movies, query, setQuery }) => {
   return (
     <div>
       <nav className="nav-bar">
@@ -16,7 +16,7 @@ const Navbar = ({ query, setQuery }) => {
             onChange={(e) => setQuery(e.target.value)}
           />
         </SerachInput>
-        <NavSearchResult />
+        <NavSearchResult movies={movies} />
       </nav>
     </div>
   );

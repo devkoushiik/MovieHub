@@ -3,8 +3,12 @@ import MovieWatchBoxRightSummery from "./MovieWatchBoxRightSummery";
 import MovieWatchListMovieRight from "./MovieWatchListMovieRight";
 import WatchMovieListMovieRightHolder from "./WatchMovieListMovieRightHolder";
 
-const MovieWatchListBoxRight = ({ tempWatchedData, average }) => {
-  const [watched, setWatched] = useState(tempWatchedData);
+const MovieWatchListBoxRight = ({
+  tempWatchedData,
+  average,
+  onCloseMovie,
+  watched,
+}) => {
   const [isOpen2, setIsOpen2] = useState(true);
 
   return (
@@ -19,7 +23,6 @@ const MovieWatchListBoxRight = ({ tempWatchedData, average }) => {
         {isOpen2 && (
           <>
             <MovieWatchBoxRightSummery watched={watched} average={average} />
-
             <WatchMovieListMovieRightHolder watched={watched} />
           </>
         )}

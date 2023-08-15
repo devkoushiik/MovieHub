@@ -1,17 +1,20 @@
-const Movie = ({ movie }) => {
+const Movie = ({ singleMovie, onSelectMovie }) => {
   return (
-    <div>
-      <li key={movie.imdbID}>
-        <img src={movie.Poster} alt={`${movie.Title} poster`} />
-        <h3>{movie.Title}</h3>
+    <ul className="list list-movies">
+      <li
+        key={singleMovie.imdbID}
+        onClick={() => onSelectMovie(singleMovie.imdbID)}
+      >
+        <img src={singleMovie.Poster} alt={`${singleMovie.Title} poster`} />
+        <h3>{singleMovie.Title}</h3>
         <div>
           <p>
             <span>🗓</span>
-            <span>{movie.Year}</span>
+            <span>{singleMovie.Year}</span>
           </p>
         </div>
       </li>
-    </div>
+    </ul>
   );
 };
 export default Movie;
