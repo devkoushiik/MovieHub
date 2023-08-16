@@ -73,14 +73,21 @@ export default function App() {
   function handleAddWatched(movie) {
     setWatched((watched) => [...watched, movie]);
   }
+  // handle delete watched
+  const handleDeleteWatched = (id) => {
+    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
+  };
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchingData = async () => {
       try {
         setIsLoading(true);
         setIsError(false);
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
+          `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`,
+          { signal: controller.signal }
         );
         // checking for response
         if (!res.ok) {
@@ -93,7 +100,10 @@ export default function App() {
         setMovies(data.Search);
       } catch (error) {
         console.error(error.message);
-        setIsError(error.message);
+
+        if (error.name !== "AbortError") {
+          setIsError(error.message);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -104,6 +114,7 @@ export default function App() {
       return;
     }
     fetchingData();
+    return () => controller.abort();
   }, [query]);
 
   return (
@@ -123,6 +134,7 @@ export default function App() {
         apiKey={API_KEY}
         watched={watched}
         onHandleWatched={handleAddWatched}
+        onDeleteWatched={handleDeleteWatched}
       />
     </>
   );

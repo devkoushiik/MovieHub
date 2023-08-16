@@ -12,8 +12,6 @@ const MovieDetails = ({
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState("");
 
-  console.log(watched);
-
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
   const watchedUserRating = watched.find(
     (movie) => movie.imdbID === selectedId
@@ -63,8 +61,18 @@ const MovieDetails = ({
         setIsLoading(false);
       }
     };
+    // calling fetch
     getMovieDetails();
+
+    // aborting function
   }, [selectedId]);
+
+  useEffect(() => {
+    if (!title) return;
+    document.title = `Movie | ${title}`;
+
+    return () => (document.title = "MovieHub");
+  }, [title]);
 
   return (
     <div className="details box">

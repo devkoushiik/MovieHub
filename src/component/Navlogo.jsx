@@ -3,7 +3,7 @@ const Navlogo = () => {
     <div>
       <div className="logo">
         <span role="img">🍿</span>
-        <h1>usePopcorn</h1>
+        <h1>MovieHub</h1>
       </div>
     </div>
   );

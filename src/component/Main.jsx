@@ -17,6 +17,7 @@ const Main = ({
   apiKey,
   watched,
   onHandleWatched,
+  onDeleteWatched,
 }) => {
   return (
     <div>
@@ -44,6 +45,7 @@ const Main = ({
             average={average}
             onCloseMovie={onCloseMovie}
             watched={watched}
+            onDeleteWatched={onDeleteWatched}
           />
         )}
       </main>

@@ -8,6 +8,7 @@ const MovieWatchListBoxRight = ({
   average,
   onCloseMovie,
   watched,
+  onDeleteWatched,
 }) => {
   const [isOpen2, setIsOpen2] = useState(true);
 
@@ -23,7 +24,10 @@ const MovieWatchListBoxRight = ({
         {isOpen2 && (
           <>
             <MovieWatchBoxRightSummery watched={watched} average={average} />
-            <WatchMovieListMovieRightHolder watched={watched} />
+            <WatchMovieListMovieRightHolder
+              watched={watched}
+              onDeleteWatched={onDeleteWatched}
+            />
           </>
         )}
       </div>
