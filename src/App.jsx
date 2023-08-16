@@ -25,28 +25,7 @@ const tempMovieData = [
   },
 ];
 
-const tempWatchedData = [
-  {
-    imdbID: "tt1375666",
-    title: "Inception",
-    year: "2010",
-    poster:
-      "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-    runtime: 148,
-    imdbRating: 8.8,
-    userRating: 10,
-  },
-  {
-    imdbID: "tt0088763",
-    title: "Back to the Future",
-    year: "1985",
-    poster:
-      "https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZjIxNi00ZjBkLTg1MjgtOWIyNThiZWIwYjRiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
-    runtime: 116,
-    imdbRating: 8.5,
-    userRating: 9,
-  },
-];
+const tempWatchedData = [];
 
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
@@ -59,7 +38,7 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [selectedId, setSelectedId] = useState("tt1375666");
+  const [selectedId, setSelectedId] = useState("");
 
   // movie id
   const handleSelectedMovie = (id) => {
@@ -94,14 +73,12 @@ export default function App() {
           throw new Error("Something went wrong!!!❌");
         }
         const data = await res.json();
-        console.log(data);
         // checking for unknown query
         if (data.Response === "False") throw new Error("Movie not found!!!❌");
         setMovies(data.Search);
       } catch (error) {
-        console.error(error.message);
-
         if (error.name !== "AbortError") {
+          console.log(error.message);
           setIsError(error.message);
         }
       } finally {
@@ -113,6 +90,7 @@ export default function App() {
       setIsError("");
       return;
     }
+    handleCloseMovie();
     fetchingData();
     return () => controller.abort();
   }, [query]);

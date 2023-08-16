@@ -1,6 +1,5 @@
 import { useState } from "react";
 import MovieWatchBoxRightSummery from "./MovieWatchBoxRightSummery";
-import MovieWatchListMovieRight from "./MovieWatchListMovieRight";
 import WatchMovieListMovieRightHolder from "./WatchMovieListMovieRightHolder";
 
 const MovieWatchListBoxRight = ({

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import SerachInput from "./SerachInput";
 import Navlogo from "./Navlogo";
 import NavSearchResult from "./NavSearchResult";

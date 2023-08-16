@@ -1,4 +1,3 @@
-import { useState } from "react";
 import MovieListBoxLeft from "./MovieListBoxLeft";
 import MovieWatchListBoxRight from "./MovieWatchListBoxRight";
 import MovieDetails from "./MovieDetails";

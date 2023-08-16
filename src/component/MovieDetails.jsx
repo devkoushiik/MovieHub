@@ -25,7 +25,6 @@ const MovieDetails = ({
     imdbRating,
     Plot: plot,
     Released: released,
-    Actors: actors,
     Director: director,
     Genre: genre,
   } = movie;
@@ -44,6 +43,18 @@ const MovieDetails = ({
     onHandleWatched(newWatchedMovie);
     onCloseMovie();
   };
+
+  // implementing key press
+  useEffect(() => {
+    const cb = (e) => {
+      if (e.code === "Escape") {
+        onCloseMovie();
+        console.log("closing");
+      }
+    };
+    document.addEventListener("keydown", cb);
+    return () => document.removeEventListener("keydown", cb);
+  }, [onCloseMovie]);
 
   // fetching movie trough id
   useEffect(() => {
@@ -79,7 +90,7 @@ const MovieDetails = ({
       {isLoading ? (
         <Loader />
       ) : (
-        <div>
+        <>
           <header>
             <button className="btn-back" onClick={onCloseMovie}>
               &larr;
@@ -114,13 +125,13 @@ const MovieDetails = ({
               ) : (
                 <p>You rated this movie {watchedUserRating}⭐</p>
               )}
+              <p>
+                <em>{plot}</em>
+              </p>
+              <p>Directed by {director}</p>
             </div>
-            <p>
-              <em>{plot}</em>
-            </p>
-            <p>Directed by {director}</p>
           </section>
-        </div>
+        </>
       )}
     </div>
   );

@@ -1,8 +1,7 @@
 const MovieWatchListMovieRight = ({ movie, onDeleteWatched }) => {
-  console.log(movie);
   return (
     <div>
-      <ul>
+      <ul className="list">
         <li key={movie.imdbID}>
           <img src={movie.poster} alt={`${movie.title} poster`} />
           <h3>{movie.title}</h3>

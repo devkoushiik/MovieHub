@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const MovieWatchBoxRightSummery = ({ average, watched }) => {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
   const avgUserRating = average(watched.map((movie) => movie.userRating));
