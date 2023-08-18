@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 import { Loader } from "./Main";
+import { useKey } from "../services/useKey";
 const MovieDetails = ({
   selectedId,
   apiKey,
@@ -11,6 +12,11 @@ const MovieDetails = ({
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState("");
+  const countRef = useRef(0);
+
+  useEffect(() => {
+    if (userRating) countRef.current = countRef.current + 1;
+  }, [userRating]);
 
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
   const watchedUserRating = watched.find(
@@ -39,22 +45,14 @@ const MovieDetails = ({
       imdbRating: Number(imdbRating),
       runtime: Number(runtime.split(" ").at(0)),
       userRating,
+      countRatingDEcisions: countRef.current,
     };
     onHandleWatched(newWatchedMovie);
     onCloseMovie();
   };
 
-  // implementing key press
-  useEffect(() => {
-    const cb = (e) => {
-      if (e.code === "Escape") {
-        onCloseMovie();
-        console.log("closing");
-      }
-    };
-    document.addEventListener("keydown", cb);
-    return () => document.removeEventListener("keydown", cb);
-  }, [onCloseMovie]);
+  // useKey setting dom on body
+  useKey("Escape", onCloseMovie);
 
   // fetching movie trough id
   useEffect(() => {

@@ -6,15 +6,8 @@ const Navbar = ({ movies, query, setQuery }) => {
     <div>
       <nav className="nav-bar">
         <Navlogo />
-        <SerachInput>
-          <input
-            className="search"
-            type="text"
-            placeholder="Search movies..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </SerachInput>
+        <SerachInput query={query} setQuery={setQuery} />
+
         <NavSearchResult movies={movies} />
       </nav>
     </div>
